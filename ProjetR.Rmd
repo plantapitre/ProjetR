@@ -39,7 +39,17 @@ random_praises <- c(
   "Bravo !",
   "Félicitation !",
   "Tu assures !",
-  "Parfait"
+  "Parfait",
+  "Prodigieux !",
+  "Extraordinaire !",
+  "Tu es le boss !",
+  "Tu es désormais membre de l'élite R !",
+  "Wunderbar !",
+  "Génial !",
+  "Magnifique !",
+  "Splendide !",
+  "Perfetto !",
+  
 )
 
 
@@ -48,7 +58,17 @@ random_praiseFR <- function() {
 }
 random_encouragements <- c(
   "Allez, tu vas y arriver !",
-  "Encore un petit effort!"
+  "Encore un petit effort!",
+  "Confiance, tes efforts vont payer !",
+  "Il est dur d'échouer, mais il est pire de n'avoir jamais tenté de réussir. Courage !",
+  "Le succès n'est pas final, l'échec n'est pas fatal, c'est le courage de continuer qui compte. Alors, courage !",
+  "L'obstination est le chemin de la réussite. Obstine-toi !",
+  "C'est en forgeant qu'on devient forgeron. Tu es sur la bonne voie !",
+  " La maîtrise s'acquiert par la pratique ",
+  "Essaie encore, c'est le métier qui rentre",
+  "Aie confiance, tu vas réussir !",
+  "Pour pouvoir contempler l'arc-en-ciel, il faut d'abord endurer la pluie. Sors ton parapluie et continue !",
+  "L'échec est l'épice qui donne la saveur au succès. Continue tes efforts !"
 )
 
 
