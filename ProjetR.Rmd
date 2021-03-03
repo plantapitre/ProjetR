@@ -130,7 +130,7 @@ names(hdv....)
 ```{r nomDesVariables-solution}
 names(hdv2003)
 ```
-##un changement#
+##une modification
 
 
 ## type des variables
