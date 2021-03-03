@@ -130,8 +130,7 @@ names(hdv....)
 ```{r nomDesVariables-solution}
 names(hdv2003)
 ```
-##une modification supplémentaire
-
+##une modif après update git
 
 ## type des variables
 Enfin, pour avoir le type de variables, utiliser la fonction `str()`
