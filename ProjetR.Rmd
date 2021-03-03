@@ -35,7 +35,11 @@ knitr::opts_chunk$set(echo = FALSE)
 #### Fonctions
 random_praises <- c(
   "Quel talent!",
-  "Trop fort!"
+  "Trop fort!",
+  "Bravo !",
+  "Félicitation !",
+  "Tu assures !",
+  "Parfait"
 )
 
 
