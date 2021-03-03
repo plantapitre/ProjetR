@@ -1,0 +1,233 @@
+---
+title: "Rbase vs SkimR"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: "Un tutoriel sur les différences entre summary() de Rbase et le package skimr"
+---
+
+```{r setup, include=FALSE}
+##### Configuration pour learnr et gradethis #####
+# install.packages("remotes") # require {remotes}
+#remotes::install_github("rstudio/learnr")
+#remotes::install_github("rstudio-education/gradethis")
+library(learnr)
+library(gradethis)
+gradethis::gradethis_setup()
+
+###### Installation du package pour le tuto, chargement et récupération du jeu de données:#####
+install.packages("skimr", repos = "https://cloud.r-project.org/")
+library(skimr)
+install.packages("questionr", repos = "https://cloud.r-project.org/")
+library(questionr)
+install.packages("tidyverse", repos = "https://cloud.r-project.org/")
+library(tidyverse)
+data(list="hdv2003")
+data(list="rp2012")
+####### Option des exercices #####
+tutorial_options(exercise.completion = FALSE)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+
+#### Fonctions
+random_praises <- c(
+  "Quel talent!",
+  "Trop fort!"
+)
+
+
+random_praiseFR <- function() {
+  paste0("Correct! ", sample(random_praises, 1))
+}
+random_encouragements <- c(
+  "Allez, tu vas y arriver !",
+  "Encore un petit effort!"
+)
+
+
+random_encouragementFR <- function() {
+  paste0("Correct! ", sample(random_encouragements, 1))
+}
+
+```
+# Rbase vs SkimR
+
+## Statistique descriptive avec RBase {data-progressive=TRUE}
+Alors comme ça, tu veux apprendre à skimmer ? Bien, tu es au bon endroit. Dans pas longtemps, tu pourras toi aussi narguer tes camarades qui utilisent *encore* des commandes de **Rbase**. 
+Bien, Mais tu le sais, un bon statisticien passe du temps à connaître son objet. Alors nous allons commencer en douceur avec un jeu de données issu de l'enquête Histoire de vie de l'Insee. Il faut bien justifier son salaire...
+
+## Connaissez-vous bien votre jeu de données ?
+Le jeu de données est préchargé. Il s'appelle **hdv2003**, et nous allons commencer par déterminer des éléments simples à son propos. Quelle taille fait-il ? Comment s'appellent les noms des colonnes ? De quoi sont-elles faites? ... Que des choses utiles pour la suite ! 
+
+## Prendre la dimension du problème
+Ton jeu de données est un *tableau* de données. Mais un tableau, c'est avant tout quelque chose de rectangulaire qui peut se décomposer en lignes et en colonnes. Eh bien! qu'allons nous faire maintenant ? ... Exact! Nous allons compter le nombre de lignes et le nombre de colonnes.
+Pour cela, nous allons utiliser la fonction **dim()** sur l'objet **hdv2003**. 
+Tu ne sais pas faire ? N'aie crainte, voici un petit exemple sur un autre jeu de données qu'il te suffira de reproduire sur le tien.
+
+```{r exempledim, echo=TRUE}
+dim(rp2012)
+```
+Ainsi, la fonction **dim()** appliquée au jeu de données *rp2012* nous indique que ce dernier contient 5170 lignes et 60 colonnes.
+   
+Allez, c'est à ton tour maintenant. Trouve le nombre de lignes et de colonnes du tableau de données hdv2003
+```{r jeudedonnees, exercise = TRUE, exercise.eval=FALSE, exercise.cap="Ecris ton code" ,exercise.startover = TRUE}
+
+
+```
+```{r jeudedonnees-hint-1}
+dim(...)
+
+```
+
+```{r jeudedonnees-solution}
+dim(hdv2003)
+```
+<div id="jeudedonnees">
+**Indice:** Tu peux trouver un indice puis la solution en cliquant sur l'ampoule!
+</div>
+
+```{r jeudedonnees-code-check}
+grade_code(glue_correct = random_praiseFR())
+```
+
+```{r dim-quizz, echo=FALSE, exercise.startover = TRUE}
+question("Combien de lignes et de colonnes contient hdv2003 ? ",
+answer(text = "5170 lignes et 60 colonnes", message = "Ne confonds tu pas avec le jeu de données de l'exemple ?"),
+answer(text = "60 lignes et 5170 colonnes", message = "Je crois que tu confonds avec le jeu de données de l'exemple, et en plus tu as inversé les lignes et les colonnes"),
+answer(text = "2000 lignes et 20 colonnes", correct = TRUE, message = "Bravo, le monde de la statistique descriptive s'ouvre à toi !"),
+answer(text = "20 lignes et 2000 colonnes", message = "Oups, je crois que tu as inversé les lignes et les colonnes !"),
+incorrect = "Bien joué, mais essaye encore !",
+allow_retry = TRUE,
+random_answer_order = TRUE
+         )
+
+```
+
+
+
+
+
+## Trouvons le nom des variables
+Super ! Tu as bien trouvé la forme de ton tableau de données, aussi appelé *dataframe* par nos amis outre-Manche. Sauf, que maintenant, tu aimerais en savoir plus. Ainsi, après avoir considéré ses formes, tu voudrais bien s'avoir comment il s'appelle. Il suffit de lui demander! Tu vas pouvoir obtenir le nom de chacune des variables très facilement. 
+
+Pour obtenir le nom des variables, utiliser la commande `names()` sur le jeu de données *hdv2003*:
+```{r nomDesVariables, exercise = TRUE, exercise.eval=FALSE, exercise.startover = TRUE}
+ 
+```
+<div id="nomDesVariables-hint-2">
+**Indice:** Il va falloir utiliser le jeu de données `hdv2003` à l'intérieur de la fonction  names()`.
+</div>
+
+```{r nomDesVariables-hint-1}
+names(...)
+```
+```{r nomDesVariables-hint-2}
+names(hdv....) 
+```
+```{r nomDesVariables-solution}
+names(hdv2003)
+```
+
+
+## type des variables
+Enfin, pour avoir le type de variables, utiliser la fonction `str()`
+```{r typeDesVariables, exercise=TRUE, exercise.eval=FALSE, exercise.startover = TRUE}
+
+```
+<div id="typeDesVariables-hint-1">
+**Indice:** Appliquer la même méthode que pour la fonction **names()** mais pour la fonction **str()**`.
+</div>
+```{r typeDesVariables-hint-1}
+#Utiliser
+str(...)
+
+```
+
+
+```{r typeDesVariables-solution}
+str(hdv2003)
+```
+Comme vous le constatez, str() est une fonction bien plus complète que names().
+
+On trouve ainsi :
+- 15 variables catégorielles de type factor
+- 5 variables quantitatives (3 entiers et 2 numériques)
+## Le facteur n’est pas passé ?
+Les facteurs (factors an anglais) sont un type de vecteur géré nativement par R et utilisés dans de nombreux domaines (modèles statistiques, représentations graphiques,…). 
+
+Les facteurs prennent leurs valeurs dans un ensemble de modalités prédéfinies et ne peuvent en prendre d’autres. 
+La liste des valeurs possibles est donnée par la fonction levels.
+
+Par exemple, ici :
+
+
+```{r exemple-facteur, exercise = TRUE, exercise.eval = TRUE, exercise.startover = TRUE}
+levels(hdv2003$sexe)
+```
+
+## Exercice 2. Montre-moi tes statistiques et je te dirai qui tu es !
+Maintenant que vous connaissez la structure de votre base de données, allons un peu plus loin dans sa description statistique.
+
+### allons plus loin
+
+A l’aide d’une commande dédiée issue de Rbase (autrement dit, sans recourir à l’utilisation d’un package annexe), produire les principales statistiques descriptives du jeu de données hdv2003
+
+```{r qui-tu-es, exercise=TRUE, exercise.eval=FALSE}
+
+```
+```{r qui-tu-es-solution}
+summary(hdv2003)
+```
+En effet, pour obtenir des statistiques élémentaires à partir des fonctionnalités de Rbase, on utilise la fonction summary().
+La fonction summary() offre une information statistique exhaustive sur l’ensemble des variables de la table.
+
+### trop de décimales ?
+Le nombre de décimales des sorties ne vous convient pas ? Il est alors possible de spécifier le nombre de chiffres à afficher grâce au paramètre digits.
+```{r decimales, exercise=TRUE, exercise.eval=FALSE}
+
+```
+```{r decimales-solution}
+summary(hdv2003, digits = 3)
+```
+
+
+## Exercice 3 Focus sur une ou plusieurs variables d’intérêt
+La fonction summary() produit un résumé statistique de toutes vos variables. Il est cependant possible de cibler une variable d’intérêt dans votre analyse. Pour cibler une variable de la sorte, il suffit de taper summary(Nom_de_la_table$Nom_de_la_variable).
+
+Selon le même principe, produisez les principales statistiques de la variable **âge**.
+```{r exo3, exercise=TRUE}
+
+```
+
+```{r exo3-solution}
+summary(hdv2003$age)
+```
+### un petit quizz
+```{r quizzexo3, echo=FALSE}
+quiz(caption = "Un joli quiz",
+  question(text = "A partir des résultats de la fonction summary(), pouvez-vous dire quelque chose sur l’allure générale de la distribution de cette variable ? (plusieurs réponses possibles)",
+    answer(text = "Non, et je ne sais pas pourquoi", message = "Pense à FC"),
+    answer(text = "Oui, et je ne sais pas quoi ajouter", message = "de la réflexion ?" ),
+    answer(text= "Non, on ne peut rien dire sur l’allure générale de la distribution", correct = TRUE),
+    answer(text = "La médiane est très proche de la moyenne (signe d’une faible dispersion)", correct = TRUE),
+    allow_retry = TRUE,
+    random_answer_order = TRUE,
+    post_message = random_praiseFR()
+    
+  )
+  
+)
+```
+QCM:
+A partir des résultats de la fonction summary(), pouvez-vous dire quelque chose sur l’allure générale de la distribution de cette variable ?
+Non, et je ne sais pas pourquoi
+Oui, et je ne sais pas quoi ajouter
+Non, on ne peut rien dire sur l’allure générale de la distribution
+La médiane est très proche de la moyenne (signe d’une faible dispersion)
+
+Réponse : Certes, la médiane est très proche de la moyenne (signe d’une faible dispersion), mais on ne peut rien conclure d’autre sur l’allure générale de la distribution.
+
+
